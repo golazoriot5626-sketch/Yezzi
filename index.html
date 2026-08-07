@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Yezzi - Premium Jigsaw Puzzle Game</title>
+
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Yezzi is an interactive online jigsaw puzzle game featuring Campaign Mode with 10 HD puzzles and Create Your Own Custom Image Puzzle mode. Play across Easy, Medium, and Hard difficulties on Desktop & Mobile.">
+  <meta name="keywords" content="Yezzi, Jigsaw Puzzle, Online Puzzle Game, Custom Image Puzzle, Free Web Game">
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@500;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- Ambient Animated Background Orbs -->
+  <div class="app-bg">
+    <div class="ambient-orb orb-1"></div>
+    <div class="ambient-orb orb-2"></div>
+  </div>
+
+  <!-- Confetti Canvas for Victory -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ==========================================================================
+       1. INTRODUCTION SCREEN (FIRST PAGE)
+       ========================================================================== -->
+  <main id="screen-intro" class="screen intro-screen active">
+    <div class="intro-content">
+      <header class="brand-header">
+        <h1 class="brand-logo title-gradient">Yezzi</h1>
+        <p class="brand-tagline">Crafting perfection piece by piece. Select a mode to begin your puzzle journey.</p>
+      </header>
+
+      <div class="mode-cards-container">
+        <!-- Campaign Mode Card -->
+        <div id="btn-mode-campaign" class="mode-card">
+          <div class="mode-icon">🖼️</div>
+          <h3>Campaign Mode</h3>
+          <p>Explore 10 curated HD image puzzles across breathtaking themes and categories.</p>
+          <button class="btn btn-primary" style="margin-top: auto;">Play Campaign</button>
+        </div>
+
+        <!-- Create Your Own Puzzle Card -->
+        <div id="btn-mode-custom" class="mode-card">
+          <div class="mode-icon">📷</div>
+          <h3>Create Your Own</h3>
+          <p>Upload any photo from your device and turn it into a custom jigsaw puzzle instantly.</p>
+          <button class="btn btn-accent" style="margin-top: auto;">Upload Photo</button>
+        </div>
+      </div>
+
+      <footer class="intro-footer">
+        <button id="btn-toggle-sound" class="btn active">🔊 Sound On</button>
+        <button id="btn-how-to-play" class="btn">❓ How to Play</button>
+      </footer>
+    </div>
+  </main>
+
+  <!-- ==========================================================================
+       2. CAMPAIGN GALLERY SCREEN
+       ========================================================================== -->
+  <section id="screen-campaign" class="screen">
+    <header class="header-bar">
+      <div class="header-title">
+        <button class="btn btn-icon btn-back" aria-label="Back">⬅️</button>
+        <h2>Campaign Collection</h2>
+      </div>
+      <span class="badge badge-medium">10 Puzzles Available</span>
+    </header>
+
+    <div class="gallery-container">
+      <div id="campaign-gallery-grid" class="gallery-grid">
+        <!-- Dynamic Cards Inserted Here by js/app.js -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       3. CUSTOM UPLOAD SCREEN
+       ========================================================================== -->
+  <section id="screen-custom" class="screen">
+    <header class="header-bar">
+      <div class="header-title">
+        <button class="btn btn-icon btn-back" aria-label="Back">⬅️</button>
+        <h2>Create Your Own Puzzle</h2>
+      </div>
+    </header>
+
+    <div class="custom-upload-container">
+      <!-- File Dropzone -->
+      <div id="custom-dropzone" class="dropzone">
+        <div class="dropzone-icon">📁</div>
+        <h3>Drag & Drop your image here</h3>
+        <p>Supports PNG, JPG, WEBP from your computer or mobile device</p>
+        <button class="btn btn-primary">Browse Image</button>
+        <input type="file" id="custom-file-input" accept="image/*" style="display: none;">
+      </div>
+
+      <!-- Upload Preview Area -->
+      <div id="custom-preview-area" class="custom-preview-area" style="display: none;">
+        <div class="preview-image-box">
+          <img id="custom-preview-img" src="" alt="Custom Puzzle Preview">
+        </div>
+        <div style="display: flex; gap: 1rem;">
+          <button id="btn-start-custom" class="btn btn-accent">Select Difficulty & Play</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       4. MAIN GAME WORKSPACE SCREEN
+       ========================================================================== -->
+  <section id="screen-game" class="screen game-screen">
+    <!-- Header Bar with Stats & Controls -->
+    <header class="header-bar game-header">
+      <div class="header-title">
+        <button class="btn btn-icon btn-back" aria-label="Quit Puzzle">⬅️</button>
+        <h3 id="game-puzzle-title">Puzzle</h3>
+        <span id="game-diff-badge" class="badge badge-easy">Easy</span>
+      </div>
+
+      <div class="game-stats">
+        <div class="stat-item">⏱️ <span id="stat-timer">00:00</span></div>
+      </div>
+
+      <div class="game-controls">
+        <button id="btn-toggle-ghost" class="btn btn-icon active" title="Toggle Target Background">👁️</button>
+        <button id="btn-toggle-edge" class="btn btn-icon" title="Toggle Edge Pieces Only">🖼️</button>
+        <button id="btn-hint" class="btn btn-icon" title="Get Hint">💡</button>
+        <button id="btn-toggle-ref" class="btn btn-icon" title="Reference Image">📷</button>
+      </div>
+    </header>
+
+    <!-- Main Workspace Body -->
+    <div class="game-body">
+      <!-- Desktop Sidebar Piece Tray -->
+      <aside class="piece-tray-sidebar">
+        <div class="tray-header">
+          <span>📦 Piece Box</span>
+          <button id="btn-tray-shuffle" class="badge" style="cursor:pointer; background:rgba(0,245,212,0.15); color:var(--cyan);" title="Shuffle Box Pieces">🔀 Shuffle</button>
+        </div>
+        <div id="desktop-tray-scroll" class="tray-scroll-area">
+          <p style="font-size: 0.8rem; color: var(--text-dim); text-align: center; margin-top: 1rem;">Drag pieces from workspace or tray onto the board grid.</p>
+        </div>
+      </aside>
+
+      <!-- HTML5 Canvas Board Container -->
+      <div id="canvas-container" class="canvas-container">
+        <canvas id="puzzle-board-canvas"></canvas>
+
+        <!-- Floating Desktop Dock for Zoom Controls -->
+        <div class="floating-dock">
+          <button id="btn-zoom-in" class="btn btn-icon" title="Zoom In">➕</button>
+          <button id="btn-zoom-out" class="btn btn-icon" title="Zoom Out">➖</button>
+          <button id="btn-zoom-reset" class="btn btn-icon" title="Reset Zoom">🔄</button>
+        </div>
+
+        <!-- Floating Reference Image Popover -->
+        <div id="ref-preview-popover" class="ref-preview-popover">
+          <div class="ref-preview-header">
+            <span>Reference Photo</span>
+            <button id="btn-close-ref" style="background:none; border:none; color:#fff; cursor:pointer;">✕</button>
+          </div>
+          <img id="ref-preview-img" src="" alt="Reference Image">
+        </div>
+      </div>
+
+      <!-- Mobile Sliding Bottom Tray Drawer -->
+      <div id="mobile-tray-drawer" class="mobile-tray-drawer">
+        <div id="mobile-drawer-handle" class="drawer-handle">
+          <div class="drawer-pill"></div>
+          <span>Swipe / Tap for Piece Tray</span>
+        </div>
+        <div id="mobile-tray-content" class="mobile-tray-content">
+          <!-- Mobile tray content -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================================================
+       MODALS
+       ========================================================================== -->
+  <!-- Difficulty Selection Modal -->
+  <div id="modal-difficulty" class="modal-overlay">
+    <div class="modal-card">
+      <h3>Select Difficulty Level</h3>
+      <p style="color: var(--text-muted); font-size: 0.9rem;">Choose the complexity level for your puzzle:</p>
+
+      <div class="difficulty-options">
+        <div class="diff-option selected" data-level="easy">
+          <div class="diff-info">
+            <h4>Easy Mode</h4>
+            <span>Relaxed & Quick Solving</span>
+          </div>
+        </div>
+
+        <div class="diff-option" data-level="medium">
+          <div class="diff-info">
+            <h4>Medium Mode</h4>
+            <span>Balanced Challenge</span>
+          </div>
+        </div>
+
+        <div class="diff-option" data-level="hard">
+          <div class="diff-info">
+            <h4>Hard Mode</h4>
+            <span>Master Puzzle Solver</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+        <button id="btn-close-difficulty" class="btn">Cancel</button>
+        <button id="btn-start-puzzle" class="btn btn-accent">Start Puzzle</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- How to Play Modal -->
+  <div id="modal-how-to-play" class="modal-overlay">
+    <div class="modal-card">
+      <h3>How to Play Yezzi</h3>
+      <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5;">
+        <p>🧩 <strong>Drag & Snap:</strong> Drag pieces onto the board grid or near matching neighbors. Pieces automatically snap into position when placed correctly!</p>
+        <p>🔗 <strong>Connected Groups:</strong> Matching adjacent pieces lock together into groups and can be dragged around as one unit.</p>
+        <p>👁️ <strong>Ghost Preview:</strong> Toggle the target background image preview with the Eye button.</p>
+        <p>🖼️ <strong>Edge Pieces:</strong> Use the Frame button to show only border pieces when starting large puzzles.</p>
+        <p>🔍 <strong>Pan & Zoom:</strong> Scroll wheel or pinch gestures allow zooming into intricate details.</p>
+      </div>
+      <div style="display: flex; justify-content: flex-end;">
+        <button id="btn-close-how-to-play" class="btn btn-primary">Got It!</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Victory Celebration Modal -->
+  <div id="modal-victory" class="modal-overlay">
+    <div class="modal-card victory-modal-card">
+      <div class="victory-icon">🏆</div>
+      <h2 class="title-gradient">Puzzle Completed!</h2>
+      <div class="stars-row">⭐⭐⭐</div>
+
+      <div style="display: flex; gap: 2rem; margin: 1rem 0;">
+        <div>
+          <span style="font-size: 0.85rem; color: var(--text-muted);">Time Taken</span>
+          <h3 id="victory-final-time">02:45</h3>
+        </div>
+      </div>
+
+      <div style="display: flex; gap: 1rem; width: 100%;">
+        <button id="btn-victory-replay" class="btn" style="flex:1;">Replay Puzzle</button>
+        <button id="btn-victory-next" class="btn btn-accent" style="flex:1;">Back to Gallery</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/images-data.js"></script>
+  <script src="js/puzzle-engine.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

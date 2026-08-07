@@ -1,0 +1,875 @@
+/* ==========================================================================
+   YEZZI JIGSAW PUZZLE GAME - DESIGN SYSTEM & STYLES
+   ========================================================================== */
+
+:root {
+  --bg-dark: #090b10;
+  --bg-card: rgba(20, 24, 38, 0.75);
+  --bg-card-hover: rgba(30, 36, 58, 0.85);
+  --bg-glass: rgba(255, 255, 255, 0.05);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --border-glass-active: rgba(255, 183, 3, 0.4);
+  
+  --primary: #7b2cbf;
+  --primary-light: #9d4edd;
+  --accent: #ffb703;
+  --accent-glow: rgba(255, 183, 3, 0.35);
+  --cyan: #00f5d4;
+  --cyan-glow: rgba(0, 245, 212, 0.3);
+  
+  --text-main: #f8f9fa;
+  --text-muted: #94a3b8;
+  --text-dim: #64748b;
+  
+  --font-family: 'Outfit', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  
+  --shadow-main: 0 16px 36px rgba(0, 0, 0, 0.5);
+  --shadow-glow: 0 0 25px var(--accent-glow);
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  position: fixed;
+}
+
+/* Background Animated Gradient Mesh */
+.app-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: -1;
+  overflow: hidden;
+  background: radial-gradient(circle at 15% 20%, rgba(123, 44, 191, 0.25) 0%, transparent 45%),
+              radial-gradient(circle at 85% 80%, rgba(0, 245, 212, 0.18) 0%, transparent 50%),
+              radial-gradient(circle at 50% 50%, rgba(255, 183, 3, 0.12) 0%, transparent 60%),
+              #090b10;
+}
+
+.ambient-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.5;
+  animation: floatOrb 18s ease-in-out infinite alternate;
+}
+
+.orb-1 {
+  width: 350px;
+  height: 350px;
+  background: var(--primary);
+  top: -50px;
+  left: -50px;
+}
+
+.orb-2 {
+  width: 400px;
+  height: 400px;
+  background: var(--cyan);
+  bottom: -100px;
+  right: -100px;
+  animation-delay: -9s;
+}
+
+@keyframes floatOrb {
+  0% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(60px, 40px) scale(1.15); }
+  100% { transform: translate(-30px, 80px) scale(0.95); }
+}
+
+/* Typography & General Components */
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.title-gradient {
+  background: linear-gradient(135deg, #ffffff 0%, var(--accent) 50%, var(--primary-light) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  background: var(--bg-card);
+  color: var(--text-main);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  transition: var(--transition);
+  outline: none;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-glass-active);
+  background: var(--bg-card-hover);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  border-color: rgba(255, 255, 255, 0.2);
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(123, 44, 191, 0.4);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--primary-light) 0%, #b55fe6 100%);
+  box-shadow: 0 12px 28px rgba(123, 44, 191, 0.6);
+}
+
+.btn-accent {
+  background: linear-gradient(135deg, var(--accent) 0%, #ffc83b 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  color: #000;
+  box-shadow: 0 8px 20px rgba(255, 183, 3, 0.35);
+}
+
+.btn-accent:hover {
+  background: linear-gradient(135deg, #ffc83b 0%, #ffd000 100%);
+  box-shadow: 0 12px 28px rgba(255, 183, 3, 0.5);
+}
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border-glass);
+}
+
+.badge-easy { background: rgba(0, 245, 212, 0.15); color: #00f5d4; border-color: rgba(0, 245, 212, 0.3); }
+.badge-medium { background: rgba(255, 183, 3, 0.15); color: #ffb703; border-color: rgba(255, 183, 3, 0.3); }
+.badge-hard { background: rgba(239, 68, 68, 0.15); color: #ef4444; border-color: rgba(239, 68, 68, 0.3); }
+
+/* Screen Router Containers */
+.screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+  transform: scale(0.98);
+  z-index: 10;
+}
+
+.screen.active {
+  opacity: 1;
+  pointer-events: all;
+  visibility: visible;
+  transform: scale(1);
+}
+
+/* ==========================================================================
+   1. INTRO / HOME SCREEN
+   ========================================================================== */
+.intro-screen {
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.intro-content {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.brand-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.brand-logo {
+  font-size: 4.5rem;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  text-shadow: var(--shadow-glow);
+  position: relative;
+}
+
+.brand-logo::after {
+  content: 'JIGSAW';
+  position: absolute;
+  bottom: -12px;
+  right: -20px;
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  font-weight: 800;
+  color: var(--cyan);
+}
+
+.brand-tagline {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 500px;
+}
+
+.mode-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+  width: 100%;
+}
+
+.mode-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.2rem;
+  text-align: center;
+  cursor: pointer;
+  backdrop-filter: blur(16px);
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.mode-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.mode-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6), 0 0 30px var(--accent-glow);
+}
+
+.mode-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--border-glass);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  color: var(--accent);
+  transition: var(--transition);
+}
+
+.mode-card:hover .mode-icon {
+  transform: rotate(6deg) scale(1.1);
+  background: rgba(255, 183, 3, 0.15);
+}
+
+.mode-card h3 {
+  font-size: 1.5rem;
+}
+
+.mode-card p {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.intro-footer {
+  display: flex;
+  gap: 1rem;
+}
+
+/* ==========================================================================
+   2. CAMPAIGN GALLERY SCREEN
+   ========================================================================== */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 2rem;
+  background: rgba(9, 11, 16, 0.85);
+  border-bottom: 1px solid var(--border-glass);
+  backdrop-filter: blur(16px);
+  z-index: 20;
+}
+
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-title h2 {
+  font-size: 1.4rem;
+}
+
+.gallery-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 2rem;
+}
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.puzzle-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: pointer;
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+.puzzle-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-glass-active);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+.puzzle-thumb-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  position: relative;
+  overflow: hidden;
+  background: #121520;
+}
+
+.puzzle-thumb-box img, .puzzle-thumb-box canvas {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.puzzle-card:hover .puzzle-thumb-box img,
+.puzzle-card:hover .puzzle-thumb-box canvas {
+  transform: scale(1.08);
+}
+
+.puzzle-card-info {
+  padding: 1rem 1.2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.puzzle-card-info h4 {
+  font-size: 1.1rem;
+}
+
+.puzzle-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   3. CUSTOM UPLOAD SCREEN
+   ========================================================================== */
+.custom-upload-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.dropzone {
+  width: 100%;
+  max-width: 600px;
+  aspect-ratio: 16 / 9;
+  border: 2px dashed var(--border-glass);
+  border-radius: var(--radius-xl);
+  background: var(--bg-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  backdrop-filter: blur(12px);
+  text-align: center;
+  padding: 2rem;
+}
+
+.dropzone:hover, .dropzone.dragover {
+  border-color: var(--accent);
+  background: rgba(255, 183, 3, 0.05);
+  box-shadow: 0 0 30px var(--accent-glow);
+}
+
+.dropzone-icon {
+  font-size: 3.5rem;
+  color: var(--accent);
+}
+
+.custom-preview-area {
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.preview-image-box {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-main);
+  background: #000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.preview-image-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ==========================================================================
+   4. DIFFICULTY SELECTION MODAL
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(10px);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-xl);
+  padding: 2rem;
+  max-width: 540px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  box-shadow: var(--shadow-main);
+  transform: scale(0.9);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.modal-overlay.active .modal-card {
+  transform: scale(1);
+}
+
+.difficulty-options {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.diff-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.2rem 1.5rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-glass);
+  background: rgba(255, 255, 255, 0.03);
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.diff-option:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.diff-option.selected {
+  border-color: var(--accent);
+  background: rgba(255, 183, 3, 0.12);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.diff-info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.diff-info h4 {
+  font-size: 1.1rem;
+}
+
+.diff-info span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.diff-count {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+/* ==========================================================================
+   5. MAIN GAME SCREEN & CANVAS WORKSPACE
+   ========================================================================== */
+.game-screen {
+  overflow: hidden;
+}
+
+.game-header {
+  height: 64px;
+  padding: 0 1.5rem;
+}
+
+.game-stats {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.06);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid var(--border-glass);
+}
+
+.game-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.game-body {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Desktop Sidebar Piece Tray */
+.piece-tray-sidebar {
+  width: 240px;
+  background: rgba(13, 16, 25, 0.9);
+  border-right: 1px solid var(--border-glass);
+  display: flex;
+  flex-direction: column;
+  z-index: 15;
+  backdrop-filter: blur(12px);
+}
+
+.tray-header {
+  padding: 1rem;
+  border-bottom: 1px solid var(--border-glass);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.tray-scroll-area {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* Main Canvas Workspace */
+.canvas-container {
+  flex: 1;
+  position: relative;
+  background: #0d0f17;
+  overflow: hidden;
+  cursor: grab;
+}
+
+.canvas-container:active {
+  cursor: grabbing;
+}
+
+#puzzle-board-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  touch-action: none;
+}
+
+/* Floating Zoom & Tool Dock for PC */
+.floating-dock {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  padding: 6px;
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(16px);
+  z-index: 20;
+  box-shadow: var(--shadow-main);
+}
+
+/* Floating Reference Thumbnail Modal / Popover */
+.ref-preview-popover {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 220px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-glass);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-main);
+  z-index: 25;
+  display: none;
+}
+
+.ref-preview-popover.active {
+  display: block;
+}
+
+.ref-preview-popover img {
+  width: 100%;
+  display: block;
+}
+
+.ref-preview-header {
+  padding: 6px 10px;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   6. MOBILE TAILORED STYLES & SLIDING TRAY
+   ========================================================================== */
+.mobile-tray-drawer {
+  display: none; /* Desktop default hidden */
+}
+
+@media (max-width: 900px) {
+  /* Mobile UI Overrides */
+  .piece-tray-sidebar {
+    display: none; /* Hide PC sidebar */
+  }
+
+  .header-bar {
+    padding: 0.8rem 1rem;
+  }
+
+  .game-stats {
+    gap: 0.5rem;
+  }
+
+  .stat-item {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+
+  .mobile-tray-drawer {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: rgba(13, 16, 25, 0.95);
+    border-top: 1px solid var(--border-glass);
+    backdrop-filter: blur(16px);
+    z-index: 30;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transform: translateY(calc(100% - 36px));
+  }
+
+  .mobile-tray-drawer.expanded {
+    transform: translateY(0);
+  }
+
+  .drawer-handle {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--accent);
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.04);
+    border-bottom: 1px solid var(--border-glass);
+  }
+
+  .drawer-pill {
+    width: 40px;
+    height: 4px;
+    background: var(--text-dim);
+    border-radius: 2px;
+  }
+
+  .mobile-tray-content {
+    flex: 1;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .floating-dock {
+    bottom: 50px;
+    right: 10px;
+  }
+}
+
+/* ==========================================================================
+   7. VICTORY CELEBRATION MODAL & CONFETTI
+   ========================================================================== */
+.victory-modal-card {
+  text-align: center;
+  align-items: center;
+}
+
+.victory-icon {
+  font-size: 4rem;
+  animation: bounceTrophy 1.2s cubic-bezier(0.36, 0, 0.66, -0.56) infinite alternate;
+}
+
+@keyframes bounceTrophy {
+  0% { transform: translateY(0) rotate(-5deg); }
+  100% { transform: translateY(-15px) rotate(5deg); }
+}
+
+.stars-row {
+  display: flex;
+  gap: 8px;
+  font-size: 2rem;
+  color: var(--accent);
+}
+
+#confetti-canvas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 99;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-glass);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent);
+}
